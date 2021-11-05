@@ -1,0 +1,2 @@
+com/tstc/composebasics/BuildConfig.java
+ com.tstc.composebasics.BuildConfig
