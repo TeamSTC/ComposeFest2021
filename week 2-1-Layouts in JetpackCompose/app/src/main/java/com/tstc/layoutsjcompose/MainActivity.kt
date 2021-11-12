@@ -41,11 +41,12 @@ class MainActivity : ComponentActivity() {
                 Surface(color = MaterialTheme.colors.background) {
                     //Greeting("Android")
                     //PhotographerCard()
-                    LayoutsCodelab()
+                    //LayoutsCodelab()
                     //SimpleList()
                    //LazyList()
                     //ImageList()
                     //BodyContent()
+                    TwoTexts(text1 = "Hi", text2 = "there")
                 }
             }
         }
