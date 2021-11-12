@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -65,7 +66,7 @@ fun CustomLayout(
 @Composable
 fun StaggeredGrid(
     modifier: Modifier = Modifier,
-    rows: Int = 5,
+    rows: Int = 3,
     content: @Composable () -> Unit
 ) {
     Layout(
@@ -163,9 +164,26 @@ val topics = listOf(
 )
 
 
-@Composable
+/*@Composable
 fun BodyContent(modifier: Modifier = Modifier) {
     Row(modifier = modifier.horizontalScroll(rememberScrollState())) {
+        StaggeredGrid {
+            for (topic in topics) {
+                Chip(modifier = Modifier.padding(8.dp), text = topic)
+            }
+        }
+    }
+}*/
+
+@Composable
+fun BodyContent(modifier: Modifier = Modifier) {
+    Row(
+        modifier = modifier
+            .background(color = Color.LightGray, shape = RectangleShape)
+            .padding(16.dp)
+            .size(200.dp)
+            .horizontalScroll(rememberScrollState())
+    ) {
         StaggeredGrid {
             for (topic in topics) {
                 Chip(modifier = Modifier.padding(8.dp), text = topic)
