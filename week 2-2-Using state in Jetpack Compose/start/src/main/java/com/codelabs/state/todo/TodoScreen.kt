@@ -36,6 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.codelabs.state.util.generateRandomTodoItem
 import kotlin.random.Random
+import androidx.compose.material.LocalContentColor
 
 /**
  * Stateless component that is responsible for the entire todo screen.
@@ -83,17 +84,25 @@ fun TodoScreen(
  * @param onItemClicked (event) notify caller that the row was clicked
  * @param modifier modifier for this element
  */
+
 @Composable
-fun TodoRow(todo: TodoItem, onItemClicked: (TodoItem) -> Unit, modifier: Modifier = Modifier) {
+fun TodoRow(
+    todo: TodoItem,
+    onItemClicked: (TodoItem) -> Unit,
+    modifier: Modifier = Modifier,
+    iconAlpha: Float = remember(todo.id) { randomTint() }
+) {
     Row(
         modifier = modifier
             .clickable { onItemClicked(todo) }
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            .padding(horizontal = 16.dp)
+            .padding(vertical = 8.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(todo.task)
         Icon(
             imageVector = todo.icon.imageVector,
+            tint = LocalContentColor.current.copy(alpha = iconAlpha),
             contentDescription = stringResource(id = todo.icon.contentDescription)
         )
     }
