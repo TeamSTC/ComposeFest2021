@@ -37,6 +37,8 @@ import androidx.compose.ui.unit.dp
 import com.codelabs.state.util.generateRandomTodoItem
 import kotlin.random.Random
 import androidx.compose.material.LocalContentColor
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.Alignment
 
 /**
  * Stateless component that is responsible for the entire todo screen.
@@ -45,6 +47,41 @@ import androidx.compose.material.LocalContentColor
  * @param onAddItem (event) request an item be added
  * @param onRemoveItem (event) request an item be removed
  */
+
+@Composable
+fun TodoInputTextField(text: String, onTextChange: (String) -> Unit, modifier: Modifier) {
+    TodoInputText(text, onTextChange, modifier)
+}
+
+@Composable
+fun TodoItemInput(onItemComplete: (TodoItem) -> Unit) {
+    val (text, setText) = remember { mutableStateOf("") }
+    Column {
+        Row(Modifier
+            .padding(horizontal = 16.dp)
+            .padding(top = 16.dp)
+        ) {
+            TodoInputText(
+                text = text,
+                onTextChange = setText,
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(end = 8.dp)
+            )
+            TodoEditButton(
+                onClick = {
+                    onItemComplete(TodoItem(text))
+                    setText("")
+                },
+                text = "Add",
+                modifier = Modifier.align(Alignment.CenterVertically),
+                enabled = text.isNotBlank()
+            )
+        }
+    }
+}
+
+
 @Composable
 fun TodoScreen(
     items: List<TodoItem>,
@@ -52,6 +89,11 @@ fun TodoScreen(
     onRemoveItem: (TodoItem) -> Unit
 ) {
     Column {
+        // add TodoItemInputBackground and TodoItem at the top of TodoScreen
+        TodoItemInputBackground(elevate = true, modifier = Modifier.fillMaxWidth()) {
+            TodoItemInput(onItemComplete = onAddItem)
+        }
+
         LazyColumn(
             modifier = Modifier.weight(1f),
             contentPadding = PaddingValues(top = 8.dp)
@@ -84,6 +126,10 @@ fun TodoScreen(
  * @param onItemClicked (event) notify caller that the row was clicked
  * @param modifier modifier for this element
  */
+
+@Preview
+@Composable
+fun PreviewTodoItemInput() = TodoItemInput(onItemComplete = { })
 
 @Composable
 fun TodoRow(
@@ -124,9 +170,10 @@ fun PreviewTodoScreen() {
     TodoScreen(items, {}, {})
 }
 
-@Preview
+/*@Preview
 @Composable
 fun PreviewTodoRow() {
     val todo = remember { generateRandomTodoItem() }
     TodoRow(todo = todo, onItemClicked = {}, modifier = Modifier.fillMaxWidth())
-}
+}*/
+
