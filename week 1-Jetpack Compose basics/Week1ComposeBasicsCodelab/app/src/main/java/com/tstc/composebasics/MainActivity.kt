@@ -162,3 +162,4 @@ fun OnboardingPreview() {
         OnboardingScreen(onContinueClicked = {})
     }
 }
+//completed!!
